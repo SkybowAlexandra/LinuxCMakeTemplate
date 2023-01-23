@@ -1,5 +1,5 @@
 #指定Cmake最低版本
-Cmake_minimum_required(VERSION 3.18)
+Cmake_minimum_required(VERSION 3.0)
 
 #vcpkg安装路径
 SET(CMAKE_TOOLCHAIN_FILE "/home/zhao/software/vcpkg/scripts/buildsystems/vcpkg.cmake")
@@ -11,6 +11,8 @@ set(CMAKE_GENERATOR "Ninja")
 set(EXECUTE OFF)
 #生成的可执行文件名字
 SET(PROJECTNAME "main")
+#设置输出文件为debug版本
+set(CMAKE_BUILD_TYPE Debug)
 
 #设置C++标准
 set(CMAKE_CXX_STANDARD 20)
@@ -34,14 +36,6 @@ if (PROJECT_BINARY_DIR STREQUAL PROJECT_SOURCE_DIR)
     message(WARNING "The binary directory of CMake cannot be the same as source directory!")
 endif()
 
-
-
-#设置输出文件为debug版本
-set(CMAKE_BUILD_TYPE Debug)
-#未设置CMAKE_BUILD_TYPE自动设置为Release
-if (NOT CMAKE_BUILD_TYPE)
-    set(CMAKE_BUILD_TYPE Release)
-endif()
 #取消winodws.h里的MIN MAX宏,不然无法使用std::min std::max
 if (WIN32)
     add_definitions(-DNOMINMAX -D_USE_MATH_DEFINES)
@@ -85,7 +79,8 @@ if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
 #LINK_LIBRARIES(-lpthread)
 target_link_libraries(${PROJECTNAME} PRIVATE -lpthread)
 #mysql库,系统安装
-target_link_libraries(${PROJECTNAME} PRIVATE -lmysqlclient)
+#target_link_libraries(${PROJECTNAME} PRIVATE -lmysqlclient)
+endif()
 
 if (CMAKE_TOOLCHAIN_FILE)
 #openssl "Find Cmake" REQUIRED 代表这个库是必须的
@@ -102,7 +97,7 @@ if (Boost_FOUND)
     link_directories(${Boost_LIBRARY_DIRS})
 endif ()
 target_link_libraries(${PROJECTNAME} PRIVATE ${Boost_LIBRARIES})
-endif()
+
 else()
 message("Vcpkg路径未指定")
 endif()

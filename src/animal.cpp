@@ -1,6 +1,9 @@
-#include "animal.h"
+#include <biology/animal.h>
 
-void Cat::Speak()
+namespace biology
 {
-    std::cout << "Cat Speak ... " << std::endl;
+    void Cat::Speak() const
+    {
+        std::cout << "Cat Speak ... " << std::endl;
+    }
 }
