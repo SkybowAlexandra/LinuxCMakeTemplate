@@ -1,0 +1,7 @@
+//vcpkg cmake配置
+{
+    "cmake.configureSettings": {
+      "CMAKE_TOOLCHAIN_FILE": "/home/zhao/software/vcpkg/scripts/buildsystems/vcpkg.cmake"
+    }
+}
+  
