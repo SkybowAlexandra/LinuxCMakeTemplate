@@ -8,7 +8,7 @@ SET(CMAKE_TOOLCHAIN_FILE "/home/zhao/software/vcpkg/scripts/buildsystems/vcpkg.c
 set(CMAKE_GENERATOR "Ninja")
 
 #编译后执行? 
-set(EXECUTE OFF)
+set(EXECUTE ON)
 #生成的可执行文件名字
 SET(PROJECTNAME "main")
 #设置输出文件为debug版本
@@ -120,31 +120,7 @@ message("Boost库目录: ${Boost_LIBRARIES}")
 message("Boost库版本: ${Boost_VERSION}")
 endif()
 
-if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
-if (${EXECUTE})
-add_custom_command(
-  TARGET
-  ${PROJECTNAME}
-  POST_BUILD
-  COMMAND
-  ./${PROJECTNAME}
-  WORKING_DIRECTORY
-  ${CMAKE_CURRENT_BINARY_DIR}
-  COMMENT
-  "开始执行程序..."
-)
-endif()
-
-elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
-add_custom_command(
-TARGET
-${PROJECTNAME}
-POST_BUILD
-COMMAND
-./${PROJECTNAME}
-WORKING_DIRECTORY
-${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_BUILD_TYPE}
-COMMENT
-"开始执行程序..."
-)
+if (EXECUTE)
+add_custom_command(TARGET ${PROJECTNAME} POST_BUILD COMMAND ${PROJECTNAME} COMMENT ".....开始执行程序.....")
+add_custom_target(run ${PROJECTNAME})
 endif()
