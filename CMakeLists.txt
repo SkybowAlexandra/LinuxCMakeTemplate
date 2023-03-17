@@ -89,7 +89,12 @@ target_link_libraries(${PROJECTNAME} PRIVATE OpenSSL::SSL OpenSSL::Crypto)
 #boost库支持
 set(Boost_USE_STATIC_LIBS ON)
 set(Boost_USE_STATIC_RUNTIME ON)
+if (CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
+set(Boost_INCLUDE_DIR ${_VCPKG_INSTALLED_DIR}/x64-windows/include)
+endif()
+if (CMAKE_CXX_COMPILER_ID MATCHES "GUN")
 set(Boost_INCLUDE_DIR ${_VCPKG_INSTALLED_DIR}/x64-linux/include)
+endif()
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 find_package(Boost COMPONENTS system locale thread REQUIRED)#添加需要的包
 if (Boost_FOUND)
