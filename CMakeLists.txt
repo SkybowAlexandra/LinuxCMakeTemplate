@@ -42,7 +42,7 @@ if (WIN32)
 endif()
 
 #开启ccache windows编译缓存
-if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
+if (CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
     message("MSCV 编译器")
     find_program(CCACHE_PROGRAM ccache)
     if (CCACHE_PROGRAM)
@@ -55,7 +55,7 @@ endif()
 
 
 #设置GCC 编译器选项
-if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
+if (CMAKE_CXX_COMPILER_ID MATCHES "GNU")
 message("G++ 编译器")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall")
 set (CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall")
@@ -73,8 +73,7 @@ add_executable(${PROJECTNAME} ${source})
 #头文件目录
 target_include_directories(${PROJECTNAME} PUBLIC "include")
 
-
-if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
+if (CMAKE_CXX_COMPILER_ID MATCHES "GNU")
 #Posix 线程库
 #LINK_LIBRARIES(-lpthread)
 target_link_libraries(${PROJECTNAME} PRIVATE -lpthread)
